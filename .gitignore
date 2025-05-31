@@ -9,9 +9,6 @@ __pycache__/
 # Environments
 .env
 
-# Ideation and Notes
-.idea/
-
 # Test Files
 *.temp/
 
