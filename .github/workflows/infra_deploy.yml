@@ -25,10 +25,6 @@ jobs:
   # JOB 1: Setup AWS and install Terraform
   setup:
     runs-on: ubuntu-latest
-    outputs:
-      aws_region: ${{ secrets.AWS_REGION }}
-      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      aws-region: ${{ secrets.AWS_REGION }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
