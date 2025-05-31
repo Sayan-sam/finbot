@@ -53,9 +53,8 @@ jobs:
 
       - name: Terraform Apply
         run: |
-          terraform apply -auto-approve \
-            -var="dummy_variable1=value1" \
-            -var="dummy_variable2=value2"
+          terraform apply -auto-approve
+
   terraform_destroy:
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'destroy'
     runs-on: ubuntu-latest
@@ -92,6 +91,4 @@ jobs:
 
       - name: Terraform Destroy
         run: |
-          terraform destroy -auto-approve \
-            -var="dummy_variable1=value1" \
-            -var="dummy_variable2=value2"
+          terraform destroy -auto-approve
