@@ -1,7 +1,7 @@
 import streamlit as st
-from auth import auth_ui
-from chat_ui import init_session_state, sidebar_ui, chat_ui
-from database import init_db
+from finbot_mods.auth import auth_ui
+from finbot_mods.chat_ui import init_session_state, sidebar_ui, chat_ui
+from finbot_mods.database import init_db
 
 # Initialize DB
 init_db()
