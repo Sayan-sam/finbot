@@ -1,11 +1,21 @@
-name: Terraform Workflow
+name: Deploy Infra
 
 on:
   push:
     branches:
       - main
       - feature/basicPlatform
-  workflow_dispatch: # for manual triggers (apply/destroy)
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Select action'
+        required: true
+        default: 'apply'
+        type: choice
+        options:
+          - apply
+          - destroy
+          - setup
 
 env:
   TERRAFORM_VERSION: 1.12.7
