@@ -71,11 +71,16 @@ resource "aws_instance" "finbot_ec2" {
               #!/bin/bash
               sudo apt update -y
               sudo apt install python3-pip -y
+              sudo apt install python3-venv -y
+              python3 -m venv ~/finbot
+              source ~/finbot/bin/activate
               mkdir -p /home/ubuntu/app
               cd /home/ubuntu/app
               git clone https://github.com/Sayan-sam/finbot.git .
               git checkout feature/basicPlatform
-              nohup streamlit run app.py --server.port 8501 --server.enableCORS false > streamlit.log 2>&1 &
+              cd src
+              pip install -r requirements.txt
+              nohup streamlit run main.py --server.port 8501 --server.address 0.0.0.0 --server.enableCORS false > streamlit.log 2>&1 &
               EOF
 
   tags = {
