@@ -1,5 +1,5 @@
 import streamlit as st
-from database import register_user, validate_user
+from .database import register_user, validate_user
 
 def auth_ui():
     st.title("🔐 Login or Register")

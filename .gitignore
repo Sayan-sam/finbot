@@ -13,7 +13,7 @@ __pycache__/
 .idea/
 
 # Test Files
-.temp/
+*.temp/
 
 # PyPI configuration file
 .pypirc

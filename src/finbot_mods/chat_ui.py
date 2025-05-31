@@ -1,5 +1,5 @@
 import streamlit as st
-from ai import ask_deepseek
+from .ai import ask_deepseek
 
 def get_response_from_deepseek(prompt):
     # Replace with actual DeepSeek API call logic
