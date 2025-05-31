@@ -1,8 +1,10 @@
 import streamlit as st
+from .ai import ask_deepseek
 
 def get_response_from_deepseek(prompt):
     # Replace with actual DeepSeek API call logic
-    return f"Echo: {prompt}"
+    res = ask_deepseek(prompt)
+    return f"{res}"
 
 def init_session_state():
     if 'chat_history' not in st.session_state:
