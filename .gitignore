@@ -20,3 +20,14 @@ __pycache__/
 
 # Act Files
 act*
+
+# Terraform files
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+crash.log
+override.tf
+override.tf.json
+terraform.tfstate.backup
+
