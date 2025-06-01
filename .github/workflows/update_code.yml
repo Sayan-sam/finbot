@@ -60,6 +60,7 @@ jobs:
             git pull
 
             # Restart streamlit
+            source ~/finbot/bin/activate
             sudo pkill -f "streamlit run" || true
             sudo nohup streamlit run main.py \
               --server.port 8501 \
