@@ -1,5 +1,7 @@
 import streamlit as st
 from .database import register_user, validate_user
+import boto3
+
 
 def auth_ui():
     st.title("🔐 Login or Register")
@@ -24,3 +26,9 @@ def auth_ui():
                 st.rerun()
             else:
                 st.error("Invalid credentials.")
+
+
+def fetch_deep_seek_api_key():
+    ssm = boto3.client('ssm')
+    response = ssm.get_parameter(Name='deep_seek_api_key', WithDecryption=True)
+    return response['Parameter']['Value']
