@@ -54,7 +54,7 @@ jobs:
             git config --global --add safe.directory /home/ubuntu/app
 
             # Fix file ownership (assumes user is 'ubuntu')
-            sudo chown -R ubuntu:ubuntu /home/ubuntu/app
+            sudo chown -R ubuntu:ubuntu /home/ubuntu/
 
             cd /home/ubuntu/app/src
             git pull
