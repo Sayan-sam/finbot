@@ -45,4 +45,6 @@ jobs:
           cd ${{ env.TERRAFORM_DIR }}
           terraform init
           terraform validate
-          terraform plan
+          terraform plan \
+          -var="deep_seek_api_key=${{ secrets.DEEPSEEK_API_KEY }}" \
+          -var="region=${{ secrets.AWS_REGION }}"

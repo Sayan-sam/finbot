@@ -57,11 +57,16 @@ jobs:
         run: |
           terraform init
           terraform validate
-          terraform plan
+          terraform plan \
+          -var="deep_seek_api_key=${{ secrets.DEEPSEEK_API_KEY }}" \
+          -var="region=${{ secrets.AWS_REGION }}"
 
       - name: Terraform Apply
         run: |
-          terraform apply -auto-approve
+          terraform apply -auto-approve \
+          -var="deep_seek_api_key=${{ secrets.DEEPSEEK_API_KEY }}" \
+          -var="region=${{ secrets.AWS_REGION }}"
+
 
   terraform_destroy:
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'destroy'
@@ -95,8 +100,12 @@ jobs:
         run: |
           terraform init
           terraform validate
-          terraform plan
+          terraform plan \
+          -var="deep_seek_api_key=${{ secrets.DEEPSEEK_API_KEY }}" \
+          -var="region=${{ secrets.AWS_REGION }}"
 
       - name: Terraform Destroy
         run: |
-          terraform destroy -auto-approve
+          terraform destroy -auto-approve \
+          -var="deep_seek_api_key=${{ secrets.DEEPSEEK_API_KEY }}" \
+          -var="region=${{ secrets.AWS_REGION }}"
