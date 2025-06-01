@@ -6,14 +6,14 @@ on:
       action:
         description: "Select action"
         required: true
-        default: "apply"
+        default: 'apply'
         type: choice
         options:
           - apply
           - destroy
 
 env:
-  TERRAFORM_VERSION: 1.5.7
+  TERRAFORM_VERSION: 1.12.1
   TERRAFORM_DIR: infra
 
 jobs:
@@ -27,6 +27,9 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+        
+      - name: Debug Inputs
+        run: echo "Action input is ${{ github.event.inputs.action }}"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -34,6 +37,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awscli
 
       - name: Test AWS Connection (Get Caller Identity)
         run: aws sts get-caller-identity
@@ -49,13 +57,17 @@ jobs:
         run: |
           terraform init
           terraform validate
-          terraform plan
+          terraform plan \
+          -var="deep_seek_api_key=${{ secrets.DEEPSEEK_API_KEY }}" \
+          -var="region=${{ secrets.AWS_REGION }}"
 
       - name: Terraform Apply
         run: |
           terraform apply -auto-approve \
-            -var="dummy_variable1=value1" \
-            -var="dummy_variable2=value2"
+          -var="deep_seek_api_key=${{ secrets.DEEPSEEK_API_KEY }}" \
+          -var="region=${{ secrets.AWS_REGION }}"
+
+
   terraform_destroy:
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'destroy'
     runs-on: ubuntu-latest
@@ -88,10 +100,12 @@ jobs:
         run: |
           terraform init
           terraform validate
-          terraform plan
+          terraform plan \
+          -var="deep_seek_api_key=${{ secrets.DEEPSEEK_API_KEY }}" \
+          -var="region=${{ secrets.AWS_REGION }}"
 
       - name: Terraform Destroy
         run: |
           terraform destroy -auto-approve \
-            -var="dummy_variable1=value1" \
-            -var="dummy_variable2=value2"
+          -var="deep_seek_api_key=${{ secrets.DEEPSEEK_API_KEY }}" \
+          -var="region=${{ secrets.AWS_REGION }}"
