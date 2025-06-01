@@ -50,13 +50,21 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_rsa ubuntu@$EC2_HOST << 'EOF'
             set -e
+            # Ensure the directory is marked safe for git
             git config --global --add safe.directory /home/ubuntu/app
+
+            # Fix file ownership (assumes user is 'ubuntu')
+            sudo chown -R ubuntu:ubuntu /home/ubuntu/app
+
             cd /home/ubuntu/app/src
             git pull
+
+            # Restart streamlit
             pkill -f "streamlit run" || true
             nohup streamlit run main.py \
               --server.port 8501 \
               --server.address 0.0.0.0 \
               --server.enableCORS false > streamlit.log 2>&1 &
           EOF
+
 
