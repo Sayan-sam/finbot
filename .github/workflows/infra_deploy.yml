@@ -6,14 +6,14 @@ on:
       action:
         description: "Select action"
         required: true
-        default: "apply"
+        default: 'apply'
         type: choice
         options:
           - apply
           - destroy
 
 env:
-  TERRAFORM_VERSION: 1.5.7
+  TERRAFORM_VERSION: 1.12.1
   TERRAFORM_DIR: infra
 
 jobs:
@@ -27,6 +27,9 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+        
+      - name: Debug Inputs
+        run: echo "Action input is ${{ github.event.inputs.action }}"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -34,6 +37,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awscli
 
       - name: Test AWS Connection (Get Caller Identity)
         run: aws sts get-caller-identity
@@ -54,10 +62,6 @@ jobs:
       - name: Terraform Apply
         run: |
           terraform apply -auto-approve
-          terraform output -raw ec2_public_ip > ec2_ip.txt
-
-      - name: Set IP as Environment Variable
-        run: echo "EC2_HOST=$(cat ec2_ip.txt)" >> $GITHUB_ENV
 
   terraform_destroy:
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'destroy'

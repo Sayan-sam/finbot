@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  TERRAFORM_VERSION: 1.5.7
+  TERRAFORM_VERSION: 1.12.1
   TERRAFORM_DIR: infra
 
 jobs:
@@ -24,16 +24,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # - name: Install aws cli v2
-      #   run: |
-      #     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      #     unzip awscliv2.zip
-      #     sudo ./aws/install
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awscli
 
       - name: Test AWS Connection (Get Caller Identity)
         run: |
-          aws s3 ls
-        # This will fail if credentials are invalid
+          aws sts get-caller-identity
 
       - name: Install Terraform
         run: |
