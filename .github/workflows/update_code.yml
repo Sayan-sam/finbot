@@ -50,6 +50,7 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_rsa ubuntu@$EC2_HOST << 'EOF'
             set -e
+            git config --global --add safe.directory /home/ubuntu/app
             cd /home/ubuntu/app/src
             git pull
             pkill -f "streamlit run" || true
@@ -58,3 +59,4 @@ jobs:
               --server.address 0.0.0.0 \
               --server.enableCORS false > streamlit.log 2>&1 &
           EOF
+
