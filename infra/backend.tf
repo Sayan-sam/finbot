@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket = "finbot-terraform-state"
+    bucket = "finbot-app-terraform-state"
     key    = "finbot/terraform.tfstate"
-    region = "ap-south-1"
+    region = "us-east-2"
   }
 }

@@ -1,9 +1,9 @@
 variable "region" {
     description = "AWS region"
-    default = "ap-south-1"
+    default = "us-east-2"
 }
 
 variable "profile" {
     description = "AWS profile"
-    default = "default"
+    default = "hackathon-participant-718950864633"
 }

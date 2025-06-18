@@ -12,10 +12,13 @@ terraform {
   }
 }
 
-resource "aws_s3_bucket" "finbot_state" {
-  bucket = "finbot-terraform-state"
+resource "aws_s3_bucket" "secure_bucket" {
+  bucket = "finbot-app-terraform-state"
   tags = {
     Name        = "Finbot Terraform State"
     Environment = "Hackathon"
   }
 }
+
+
+

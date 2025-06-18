@@ -27,7 +27,8 @@ def auth_ui():
             else:
                 st.error("Invalid credentials.")
 
+
 def fetch_deep_seek_api_key():
-    ssm = boto3.client('ssm', region_name='ap-south-1')
+    ssm = boto3.client('ssm', region_name='us-east-2')
     response = ssm.get_parameter(Name='deep_seek_api_key', WithDecryption=True)
     return response['Parameter']['Value']
